@@ -43,7 +43,7 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
       </Script>
     <main className={`mx-auto max-w-[520px]  pt-16 ${inter.className}`}>
       <div className="flex  flex-col items-center justify-center pl-6 pr-6">
-        <div className="mb-4 flex flex-col items-center ring-offset-neutral-900">
+        <div className="mb-4 flex flex-col items-center text-gray-900">
            <h2 className="text-2xl mb-2">{오늘날짜}</h2>
             <p className="text-xl">11:30~14:00</p>
         </div>
@@ -74,11 +74,11 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
           <div className="flex gap-x-5 whitespace-pre-line pt-5 pb-3 my-[3px] gap-y-1.5">
             <h1 className="text-gray-900">이용안내</h1>
           </div>
-          <ul className="ring-offset-neutral-900">
+          <ul className="text-gray-700">
             <li>간편식 샐러드 BOX : 5,000원</li>
             <li>즉석 셀프 라면 : 4,500원</li>
           </ul>
-          <div className="text-center mt-7">© 코집사</div>
+          <div className="text-center mt-7 text-gray-700">© 코집사</div>
         </div>
       </div>
       <BottomButton onClick={handleClickCopy}>공유하기</BottomButton>
