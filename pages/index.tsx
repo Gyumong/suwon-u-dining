@@ -101,15 +101,10 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
 
 export async function getStaticProps() {
   try{
-  const currentDate = new Date();
+  const currentDate = new Date().toISOString();
 
-// 날짜에 하루를 더하기
-  currentDate.setDate(currentDate.getDate() + 1);
-
-// 날짜를 ISO 형식으로 변환
-  const tomorrowDate = currentDate.toISOString();
   const data = await requestApi<ApiResponse>("/v1/diet",{
-    date: tomorrowDate,
+    date: currentDate,
     type: 'LUNCH'
   })
   return {
