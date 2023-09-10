@@ -1,12 +1,14 @@
-import { Inter } from 'next/font/google'
+import {Inter} from 'next/font/google'
 import requestApi from "@/utils/requestApi";
 import {ApiResponse} from "@/interface/diet";
-import { Card, CardBody, CardFooter, CardHeader, Chip, Divider } from '@nextui-org/react';
+import {Card, CardBody, CardHeader, Chip} from '@nextui-org/react';
 import getDate from "@/utils/getDate";
 import BottomButton from "@/components/BottomButton";
-import { shareURL } from '@/utils/shareUrl';
+import {shareURL} from '@/utils/shareUrl';
 import ErrorFallbackComponent from "@/components/ErrorFallbackComponent";
 import Script from 'next/script';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +21,17 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
     shareURL(
       {
         title: '수원대학교 학식',
-        url: `https://suwon-u-dining.vercel.app`
+        url: `https://suwon-u-dining.vercel.app`,
+        onCompleted: () => toast("링크를 복사했습니다.",{
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        })
       }
     );
   };
@@ -29,7 +41,7 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
   console.log('data',dietInfo)
   return (
     <>
-
+      <ToastContainer/>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=G-SK7WHF4GEH`} />
       <Script id="google-analytics">
         {`
