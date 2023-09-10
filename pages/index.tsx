@@ -19,7 +19,7 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
     shareURL(
       {
         title: '수원대학교 학식',
-        url: `https://suwon-u-dining.vercel.app/`
+        url: `https://suwon-u-dining.vercel.app`
       },
       () => alert('경로가 복사되었습니다.')
     );
