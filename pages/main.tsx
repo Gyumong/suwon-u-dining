@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({ data,error }: { data: ApiResponse,error:boolean }) {
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   if(error) return <ErrorFallbackComponent/>
 
@@ -38,7 +37,7 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
 
   const dietInfo = data?.result?.dateAndTypeDietInfo
   const 오늘날짜 = getDate();
-  console.log('data',dietInfo)
+
   return (
     <>
       <ToastContainer/>
@@ -101,10 +100,13 @@ export default function Home({ data,error }: { data: ApiResponse,error:boolean }
 
 export async function getStaticProps() {
   try{
-  const currentDate = new Date().toISOString();
-
+  const currentDate =  new Date()
+    // UTC+9 으로 변환
+    currentDate.setHours(currentDate.getHours() + 9);
+    // 날짜를 ISO 형식으로 변환
+  const todayDate = currentDate.toISOString();
   const data = await requestApi<ApiResponse>("/v1/diet",{
-    date: currentDate,
+    date: todayDate,
     type: 'LUNCH'
   })
   return {
