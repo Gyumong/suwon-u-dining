@@ -1,38 +1,39 @@
-export function shareURL(
-  data: {
-    title: string;
-    url: string;
-  },
-  callback: () => void
-) {
+interface CopyURLParams {
+  title: string;
+  url: string;
+  onCompleted?: () => void;
+  onError?: () => void;
+}
+
+
+export const shareURL =({title, url,onCompleted,onError }:CopyURLParams) =>{
   if (typeof window !== 'undefined') {
     if (window.navigator?.share) {
       window.navigator
         .share({
-          title: data.title,
-          url: data.url
+          title,
+          url
         })
         .then(() => {
-          // 공유하기의 경우 callback 호출 X
+          onCompleted?.();
         })
-        .catch(console.error);
-    } else if (window.navigator?.clipboard){
-      window.navigator.clipboard
-        .writeText(data.url)
-        .then(() => {
-          callback();
-        })
-        .catch(console.error);
+        .catch(() => {
+          onError?.();
+        });
     } else {
-      // iOS 13.4 미만용
-      const textArea = document.createElement('textarea')
-      document.body.appendChild(textArea);
-      textArea.value = data.url;
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-
-      callback();
+      window.navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          onCompleted?.();
+        })
+        .catch(() => {
+          let input = document.createElement('input');
+          input.setAttribute('value', url);
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand('copy');
+          document.body.removeChild(input);
+        });
     }
   }
 }
