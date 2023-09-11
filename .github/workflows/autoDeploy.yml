@@ -6,8 +6,7 @@ env:
 
 on:
   schedule:
-      // # 3시간마다 배포
-        - cron: "30 9 * * *"
+        - cron: "35 9 * * *"
 
 jobs:
   cron:
